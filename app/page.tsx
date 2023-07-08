@@ -1,7 +1,7 @@
 "use client";
 import Form from "@/components/Form";
 import { ChakraProvider } from "@chakra-ui/react";
-
+import TaskListing from "@/components/TaskListing";
 export default function Home() {
   return (
     <ChakraProvider>
@@ -11,6 +11,7 @@ export default function Home() {
         </h1>
         <div>
           <Form />
+          <TaskListing />
         </div>
       </div>
     </ChakraProvider>
