@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.7.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
+    "framer-motion": "^10.12.18",
     "mobx": "^6.9.0",
     "mobx-state-tree": "^5.1.8",
     "next": "13.4.9",
