@@ -11,31 +11,35 @@ import { useState } from "react";
 
 const Form = () => {
   const { taskStore } = useStore();
-  const [formValues, setFormValues] = useState({
-    title: "",
-    description: "",
-    status: "To Do",
-  });
+  // const [formValues, setFormValues] = useState({
+  //   title: "",
+  //   description: "",
+  //   status: "To Do",
+  // });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [status, setStatus] = useState("To Do"); // Set the default value to 'To Do'
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   setFormValues({
+  //     ...formValues,
+  //     [name]: value,
+  //   });
+  // };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newTask = Task.create({
       id: Math.random().toString(),
-      title: formValues.title,
-      description: formValues.description,
-      status: formValues.status,
+      title,
+      description,
+      status,
     });
-
     taskStore.addTask(newTask);
+    onClose();
   };
 
   return (
@@ -52,28 +56,25 @@ const Form = () => {
           <ModalContent className='w-full flex items-center justify-center'>
             <form
               onSubmit={handleSubmit}
-              className='w-full  p-10 shadow grid gap-10 max-w-sm mx-auto'
+              className='mb-10 p-10 shadow grid gap-10 max-w-sm mx-auto'
             >
               <input
                 className='shadow-lg border py-2 rounded-sm px-3'
-                name='title'
                 type='text'
                 placeholder='Title'
-                value={formValues.title}
-                onChange={handleChange}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <input
                 className='shadow-lg border h-24 py-2 rounded-sm px-3'
                 type='text'
-                name='description'
                 placeholder='Description'
-                value={formValues.description}
-                onChange={handleChange}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
               <select
-                name='status'
-                value={formValues.status}
-                onChange={handleChange}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
                 className='p-2 rounded-sm shadow-lg bg-transparent'
               >
                 <option value='To Do'>To Do</option>
@@ -83,13 +84,13 @@ const Form = () => {
               <div className='grid gap-2'>
                 <button
                   type='submit'
-                  className='bg-teal-600 rounded-sm text-white py-2 hover:bg-teal-400 duration-200 transition-all ease-linear'
+                  className='bg-blue-400 rounded-sm text-white py-2 hover:bg-blue-500 duration-200 transition-all ease-linear'
                 >
                   Add Task
                 </button>
                 <button
-                  onClick={onClose}
-                  className=' rounded-sm text-red-700 py-2'
+                  onClick={() => setShowForm(!showForm)}
+                  className=' rounded-sm text-blue-500 py-2'
                 >
                   Cancel
                 </button>

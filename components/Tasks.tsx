@@ -25,6 +25,65 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
     task.description
   );
   const [updatedStatus, setUpdatedStatus] = useState(task.status);
+
+  const handleEdit = () => {
+    const updatedTask: UpdatedTask & {
+      setTitle(title: string): void;
+      setDescription(description: string): void;
+      setStatus(status: string): void;
+    } = {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      setTitle: () => {},
+      setDescription: () => {},
+      setStatus: () => {},
+    };
+
+    onTaskEdit(task.id, updatedTask);
+    setIsEditing(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updatedTask: UpdatedTask & {
+      setTitle(title: string): void;
+      setDescription(description: string): void;
+      setStatus(status: string): void;
+    } = {
+      id: task.id,
+      title: updatedTitle,
+      description: updatedDescription,
+      status: updatedStatus,
+      setTitle: (title: string) => {
+        setUpdatedTitle(title);
+      },
+      setDescription: (description: string) => {
+        setUpdatedDescription(description);
+      },
+      setStatus: (status: string) => {
+        setUpdatedStatus(status);
+      },
+    };
+    onTaskEdit(task.id, updatedTask);
+
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setUpdatedTitle(task.title);
+    setUpdatedDescription(task.description);
+    setUpdatedStatus(task.status);
+
+    setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    onTaskDelete(task.id);
+    taskStore.deleteTask(task.id);
+  };
+
   return (
     <>
       <div className='bg-white shadow-md p-5 rounded-lg mb-6'>
@@ -35,7 +94,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
             <div>
               <button
                 className='border-0 bg-[#64a7fe] p-1 px-3 rounded-full text-sm text-white font-semibold'
-                //   onClick={handleEdit}
+                onClick={handleEdit}
               >
                 Edit
               </button>
@@ -43,7 +102,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
             <div>
               <button
                 className='border-0 bg-[#8C64FE] p-1 px-3 rounded-full text-sm text-white font-semibold'
-                //   onClick={handleDelete}
+                onClick={handleDelete}
               >
                 Delete
               </button>
@@ -51,10 +110,10 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
           </div>
         </>
 
-        {isEditing && (
+        {isEditing ? (
           <div className='fixed top-0 bottom-0 grid place-content-center left-0 right-0 bg-black/10 backdrop-blur-sm'>
             <form
-              // onSubmit={handleSave}
+              onSubmit={handleSave}
               className='flex flex-col justify-between max-w-md h-[350px] bg-[#fafafa] p-5 shadow lg rounded-lg'
             >
               <div className='grid'>
@@ -94,7 +153,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
                 </div>
                 <div>
                   <button
-                    // onClick={handleCancel}
+                    onClick={handleCancel}
                     className='btn w-full bg-[#8C64FE] text-white hover:text-black'
                   >
                     Cancel
@@ -103,7 +162,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
               </div>
             </form>
           </div>
-        )}
+        ) : null}
       </div>
     </>
   );

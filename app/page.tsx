@@ -19,6 +19,7 @@ export default function Home() {
       }),
     };
   });
+
   return (
     <>
       <storeContext.Provider value={store}>
