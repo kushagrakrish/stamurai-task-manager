@@ -55,7 +55,7 @@ const TaskListing = observer(() => {
       <h2 className='text-xl mt-10 border-b-4 border-teal-700 pb-2 mb-10 font-medium text-teal-700'>
         Lets Crush! These Tasks
       </h2>
-      <div className='flex gap-10 justify-between w-full'>
+      <div className='flex flex-col md:flex-row gap-10 justify-between w-full'>
         {renderTasksByStatus("To Do")}
         {renderTasksByStatus("In Progress")}
         {renderTasksByStatus("Completed")}

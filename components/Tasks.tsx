@@ -93,7 +93,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
           <div className='flex gap-2 mt-10'>
             <div>
               <button
-                className='border-0 bg-[#64a7fe] p-1 px-3 rounded-full text-sm text-white font-semibold'
+                className='bg-teal-700 px-3 rounded-md font-semibold text-white py-1 hover:bg-teal-900 duration-200 transition-all ease-linear'
                 onClick={handleEdit}
               >
                 Edit
@@ -101,7 +101,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
             </div>
             <div>
               <button
-                className='border-0 bg-[#8C64FE] p-1 px-3 rounded-full text-sm text-white font-semibold'
+                className=' py-1 px-3 bg-red-600 text-white rounded-md font-semibold hover:bg-red-800 duration-200 transition-all ease-linear'
                 onClick={handleDelete}
               >
                 Delete

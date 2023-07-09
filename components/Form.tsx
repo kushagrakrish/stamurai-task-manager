@@ -59,14 +59,14 @@ const Form = () => {
               className='mb-10 p-10 shadow grid gap-10 max-w-sm mx-auto'
             >
               <input
-                className='shadow-lg border py-2 rounded-sm px-3'
+                className=' border border-teal-500 focus:outline-none focus:teal-800 focus:ring-1  py-2 rounded-sm px-3'
                 type='text'
                 placeholder='Title'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
               <input
-                className='shadow-lg border h-24 py-2 rounded-sm px-3'
+                className=' border focus:outline-none focus:teal-800 focus:ring-1 border-teal-500 h-24 py-2 rounded-sm px-3'
                 type='text'
                 placeholder='Description'
                 value={description}
@@ -75,7 +75,7 @@ const Form = () => {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className='p-2 rounded-sm shadow-lg bg-transparent'
+                className='p-2 border border-teal-500 rounded-sm focus:outline-none focus:teal-800 focus:ring-1  bg-transparent'
               >
                 <option value='To Do'>To Do</option>
                 <option value='In Progress'>In Progress</option>
@@ -84,13 +84,13 @@ const Form = () => {
               <div className='grid gap-2'>
                 <button
                   type='submit'
-                  className='bg-blue-400 rounded-sm text-white py-2 hover:bg-blue-500 duration-200 transition-all ease-linear'
+                  className='bg-teal-700 rounded-md font-semibold text-white py-2 hover:bg-teal-900 duration-200 transition-all ease-linear'
                 >
                   Add Task
                 </button>
                 <button
                   onClick={() => setShowForm(!showForm)}
-                  className=' rounded-sm text-blue-500 py-2'
+                  className=' py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-800 duration-200 transition-all ease-linear'
                 >
                   Cancel
                 </button>
