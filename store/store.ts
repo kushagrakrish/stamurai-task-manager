@@ -21,7 +21,7 @@ export const Task = types
 
 const TaskStore = types
   .model("TaskStore", {
-    tasks: types.array(Task),
+    tasks: types.optional(types.array(Task), []), // Make tasks optional with an empty array as the default value
   })
   .actions((self) => {
     const storeTasksToLocalStorage = () => {

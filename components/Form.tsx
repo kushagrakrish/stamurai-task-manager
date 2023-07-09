@@ -1,4 +1,6 @@
 "use client";
+import { useStore } from "@/store/context";
+import { Task } from "@/store/store";
 import {
   Modal,
   ModalContent,
@@ -8,12 +10,14 @@ import {
 import { useState } from "react";
 
 const Form = () => {
+  const { taskStore } = useStore();
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
-    status: "",
+    status: "To Do",
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({
@@ -22,9 +26,16 @@ const Form = () => {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formValues);
+    const newTask = Task.create({
+      id: Math.random().toString(),
+      title: formValues.title,
+      description: formValues.description,
+      status: formValues.status,
+    });
+
+    taskStore.addTask(newTask);
   };
 
   return (
