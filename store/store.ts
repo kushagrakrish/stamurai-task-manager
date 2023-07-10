@@ -1,5 +1,4 @@
 "use client";
-
 import { types, applySnapshot } from "mobx-state-tree";
 
 export const Task = types
@@ -23,7 +22,7 @@ export const Task = types
 
 const TaskStore = types
   .model("TaskStore", {
-    tasks: types.optional(types.array(Task), []), // Make tasks optional with an empty array as the default value
+    tasks: types.optional(types.array(Task), []),
   })
   .actions((self) => {
     const storeTasksToLocalStorage = () => {
@@ -39,7 +38,8 @@ const TaskStore = types
       try {
         const tasksJson = localStorage.getItem("tasks");
         if (tasksJson) {
-          self.tasks = JSON.parse(tasksJson);
+          const parsedTasks = JSON.parse(tasksJson);
+          applySnapshot(self.tasks, parsedTasks);
         }
       } catch (error) {
         console.error("Error parsing tasks from local storage:", error);

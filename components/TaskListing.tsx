@@ -44,19 +44,23 @@ const TaskListing = observer(() => {
       </div>
     );
   };
-  useEffect(() => {
-    taskStore.loadTasksFromLocalStorage(); // Load tasks from local storage on component mount
-  }, [taskStore]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      taskStore.loadTasksFromLocalStorage(); // Load tasks from local storage on component mount
+    }
+  }, [taskStore]);
   return (
-    <div className='mb-10'>
-      <h2 className='text-xl mt-10 border-b-4 border-teal-700 pb-2 mb-10 font-medium text-teal-700'>
-        Lets Crush! These Tasks
-      </h2>
-      <div className='flex flex-col md:flex-row gap-10 justify-between w-full'>
-        {renderTasksByStatus("To Do")}
-        {renderTasksByStatus("In Progress")}
-        {renderTasksByStatus("Completed")}
+    <div suppressHydrationWarning={true}>
+      <div className='mb-10'>
+        <h2 className='text-xl mt-10 border-b-4 border-teal-700 pb-2 mb-10 font-medium text-teal-700'>
+          Lets Crush! These Tasks
+        </h2>
+        <div className='flex flex-col md:flex-row gap-10 justify-between w-full'>
+          {renderTasksByStatus("To Do")}
+          {renderTasksByStatus("In Progress")}
+          {renderTasksByStatus("Completed")}
+        </div>
       </div>
     </div>
   );

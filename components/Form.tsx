@@ -32,7 +32,7 @@ const Form = observer(() => {
 
   return (
     <>
-      <div className=''>
+      <div suppressHydrationWarning={true}>
         <button
           className='border-0 py-2 px-10 rounded-md font-medium mx-auto  bg-teal-600 text-white mb-5 shadow-md'
           onClick={onOpen}
