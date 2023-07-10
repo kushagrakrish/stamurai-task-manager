@@ -17,10 +17,6 @@ export interface UpdatedTask {
 const TaskListing = observer(() => {
   const { taskStore } = useStore();
 
-  useEffect(() => {
-    taskStore.loadTasksFromLocalStorage(); // Load tasks from local storage on component mount
-  }, [taskStore]);
-
   const handleEditTask = (taskId: string, updatedTask: any) => {
     taskStore.editTask(taskId, updatedTask as any);
   };
@@ -36,7 +32,7 @@ const TaskListing = observer(() => {
       <div className='bg-[#b4b4b467] p-5 w-full rounded-lg'>
         <h2 className='mb-5 font-semibold'>{status}</h2>
         <div>
-          {tasks.map((task) => (
+          {tasks.map((task: any, key: any) => (
             <Tasks
               key={task.id}
               task={task}
@@ -48,6 +44,9 @@ const TaskListing = observer(() => {
       </div>
     );
   };
+  useEffect(() => {
+    taskStore.loadTasksFromLocalStorage(); // Load tasks from local storage on component mount
+  }, [taskStore]);
 
   return (
     <div className='mb-10'>

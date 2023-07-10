@@ -7,9 +7,10 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
-const Form = () => {
+const Form = observer(() => {
   const { taskStore } = useStore();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -52,6 +53,7 @@ const Form = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
+
               <input
                 className=' border focus:outline-none focus:teal-800 focus:ring-1 border-teal-500 h-24 py-2 rounded-sm px-3'
                 type='text'
@@ -88,6 +90,6 @@ const Form = () => {
       </div>
     </>
   );
-};
+});
 
 export default Form;

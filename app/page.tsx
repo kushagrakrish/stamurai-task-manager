@@ -3,9 +3,9 @@
 import Form from "@/components/Form";
 import { ChakraProvider } from "@chakra-ui/react";
 import TaskListing from "@/components/TaskListing";
-import { useLocalObservable } from "mobx-react-lite";
 import TaskStore from "@/store/store";
 import { storeContext } from "@/store/context";
+import { useLocalObservable } from "mobx-react-lite";
 
 export default function Home() {
   const store = useLocalObservable(() => {

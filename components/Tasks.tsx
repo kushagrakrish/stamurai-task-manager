@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { UpdatedTask } from "./TaskListing";
+import { observer } from "mobx-react-lite";
 
 interface TasksProps {
   task: any;
@@ -15,7 +16,7 @@ interface TasksProps {
   onTaskDelete: (taskId: string) => void;
 }
 
-const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
+const Tasks = observer(({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(task.title);
   const [updatedDescription, setUpdatedDescription] = useState(
@@ -94,26 +95,37 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
         <div className='fixed top-0 bottom-0 grid place-content-center left-0 right-0 bg-black/10 backdrop-blur-sm'>
           <form
             onSubmit={handleSave}
-            className='flex flex-col justify-between max-w-md h-[350px] bg-[#fafafa] p-5 shadow lg rounded-lg'
+            className='flex flex-col justify-between max-w-md h-[400px] bg-[#fafafa] p-5 shadow lg rounded-lg'
           >
-            <div className='grid'>
+            <div className='flex flex-col gap-2'>
               <h2 className='text-center mb-5'>Edit Task</h2>
+              <label className='text-base font-medium text-teal-800'>
+                Title
+              </label>
               <input
-                className='shadow-lg border py-2 rounded-sm px-3 mb-2'
+                className=' border border-teal-500 focus:outline-none focus:teal-800 focus:ring-1  py-2 rounded-sm px-3'
                 type='text'
                 placeholder='Title'
                 value={updatedTitle}
                 onChange={(e) => setUpdatedTitle(e.target.value)}
               />
+              <label className='text-base font-medium text-teal-800'>
+                Description
+              </label>
+
               <input
-                className='shadow-lg border py-2 rounded-sm px-3 mb-2'
+                className=' border border-teal-500 focus:outline-none focus:teal-800 focus:ring-1  py-2 rounded-sm px-3'
                 type='text'
                 placeholder='Description'
                 value={updatedDescription}
                 onChange={(e) => setUpdatedDescription(e.target.value)}
               />
+              <label className='text-base font-medium text-teal-800'>
+                Status
+              </label>
+
               <select
-                className='p-2 rounded-sm shadow-lg bg-transparent mb-2'
+                className=' border border-teal-500 focus:outline-none focus:teal-800 focus:ring-1  py-2 rounded-sm px-3'
                 value={updatedStatus}
                 onChange={(e) => setUpdatedStatus(e.target.value)}
               >
@@ -122,11 +134,11 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
                 <option value='Completed'>Completed</option>
               </select>
             </div>
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='flex items-center justify-start gap-5'>
               <div>
                 <button
                   type='submit'
-                  className='btn w-full bg-[#8C64FE] text-white hover:text-black'
+                  className='bg-teal-700 px-3 rounded-md font-semibold text-white py-1 hover:bg-teal-900 duration-200 transition-all ease-linear'
                 >
                   Done
                 </button>
@@ -134,7 +146,7 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
               <div>
                 <button
                   onClick={handleCancel}
-                  className='btn w-full bg-[#8C64FE] text-white hover:text-black'
+                  className=' py-1 px-3 bg-red-600 text-white rounded-md font-semibold hover:bg-red-800 duration-200 transition-all ease-linear'
                 >
                   Cancel
                 </button>
@@ -145,6 +157,6 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
       )}
     </div>
   );
-};
+});
 
 export default Tasks;
