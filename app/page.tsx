@@ -27,23 +27,21 @@ export default function Home() {
 
   return (
     <>
-      <div suppressHydrationWarning={true}>
-        <storeContext.Provider value={store}>
-          <ChakraProvider>
-            <div className='bg-teal-50 h-screen'>
-              <div className='max-w-[1280px]  mx-auto py-10 px-5 lg:px-10'>
-                <h1 className='font-bold text-center text-3xl mb-10 uppercase text-teal-800'>
-                  Stamurai Task Manager
-                </h1>
-                <div>
-                  <Form />
-                  <TaskListing />
-                </div>
+      <storeContext.Provider value={store}>
+        <ChakraProvider>
+          <div className='bg-teal-50 h-screen'>
+            <div className='max-w-[1300px]  mx-auto py-10 px-5 lg:px-10'>
+              <h1 className='font-bold text-center text-3xl mb-10 uppercase text-teal-800'>
+                Stamurai Task Manager
+              </h1>
+              <div>
+                <Form />
+                <TaskListing />
               </div>
             </div>
-          </ChakraProvider>
-        </storeContext.Provider>
-      </div>
+          </div>
+        </ChakraProvider>
+      </storeContext.Provider>
     </>
   );
 }

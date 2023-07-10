@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
-import Tasks from "./Tasks";
 import { useStore } from "@/store/context";
-import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import Tasks from "./Tasks";
 
 export interface UpdatedTask {
   id: string;
@@ -14,7 +13,7 @@ export interface UpdatedTask {
   setStatus(status: string): void;
 }
 
-const TaskListing = observer(() => {
+const TaskListing = () => {
   const { taskStore } = useStore();
 
   const handleEditTask = (taskId: string, updatedTask: any) => {
@@ -51,19 +50,17 @@ const TaskListing = observer(() => {
     }
   }, [taskStore]);
   return (
-    <div suppressHydrationWarning={true}>
-      <div className='mb-10'>
-        <h2 className='text-xl mt-10 border-b-4 border-teal-700 pb-2 mb-10 font-medium text-teal-700'>
-          Lets Crush! These Tasks
-        </h2>
-        <div className='flex flex-col md:flex-row gap-10 justify-between w-full'>
-          {renderTasksByStatus("To Do")}
-          {renderTasksByStatus("In Progress")}
-          {renderTasksByStatus("Completed")}
-        </div>
+    <div className='mb-10'>
+      <h2 className='text-xl mt-10 border-b-4 border-teal-700 pb-2 mb-10 font-medium text-teal-700'>
+        Lets Crush! These Tasks
+      </h2>
+      <div className='flex flex-col md:flex-row gap-10 justify-between w-full'>
+        {renderTasksByStatus("To Do")}
+        {renderTasksByStatus("In Progress")}
+        {renderTasksByStatus("Completed")}
       </div>
     </div>
   );
-});
+};
 
 export default TaskListing;
