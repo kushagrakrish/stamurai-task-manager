@@ -11,24 +11,11 @@ import { useState } from "react";
 
 const Form = () => {
   const { taskStore } = useStore();
-  // const [formValues, setFormValues] = useState({
-  //   title: "",
-  //   description: "",
-  //   status: "To Do",
-  // });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState("To Do"); // Set the default value to 'To Do'
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   setFormValues({
-  //     ...formValues,
-  //     [name]: value,
-  //   });
-  // };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

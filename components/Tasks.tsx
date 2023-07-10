@@ -1,6 +1,4 @@
 "use client";
-
-import { useStore } from "@/store/context";
 import { useState } from "react";
 import { UpdatedTask } from "./TaskListing";
 
@@ -9,7 +7,7 @@ interface TasksProps {
   onTaskEdit: (
     taskId: string,
     updatedTask: UpdatedTask & {
-      setTitle(title: string): void;
+      setTitle(title: string): any;
       setDescription(description: string): void;
       setStatus(status: string): void;
     }
@@ -18,7 +16,6 @@ interface TasksProps {
 }
 
 const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
-  const { taskStore } = useStore();
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(task.title);
   const [updatedDescription, setUpdatedDescription] = useState(
@@ -27,21 +24,6 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
   const [updatedStatus, setUpdatedStatus] = useState(task.status);
 
   const handleEdit = () => {
-    const updatedTask: UpdatedTask & {
-      setTitle(title: string): void;
-      setDescription(description: string): void;
-      setStatus(status: string): void;
-    } = {
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      status: task.status,
-      setTitle: () => {},
-      setDescription: () => {},
-      setStatus: () => {},
-    };
-
-    onTaskEdit(task.id, updatedTask);
     setIsEditing(true);
   };
 
@@ -81,90 +63,87 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
 
   const handleDelete = () => {
     onTaskDelete(task.id);
-    taskStore.deleteTask(task.id);
   };
 
   return (
-    <>
-      <div className='bg-white shadow-md p-5 rounded-lg mb-6'>
-        <>
-          <h3 className='text-xl font-semibold'>{task.title}</h3>
-          <p className='text-gray-500'>{task.description}</p>
-          <div className='flex gap-2 mt-10'>
-            <div>
-              <button
-                className='bg-teal-700 px-3 rounded-md font-semibold text-white py-1 hover:bg-teal-900 duration-200 transition-all ease-linear'
-                onClick={handleEdit}
-              >
-                Edit
-              </button>
-            </div>
-            <div>
-              <button
-                className=' py-1 px-3 bg-red-600 text-white rounded-md font-semibold hover:bg-red-800 duration-200 transition-all ease-linear'
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </>
-
-        {isEditing ? (
-          <div className='fixed top-0 bottom-0 grid place-content-center left-0 right-0 bg-black/10 backdrop-blur-sm'>
-            <form
-              onSubmit={handleSave}
-              className='flex flex-col justify-between max-w-md h-[350px] bg-[#fafafa] p-5 shadow lg rounded-lg'
+    <div className='bg-white shadow-md p-5 rounded-lg mb-6'>
+      <>
+        <h3 className='text-xl font-semibold'>{task.title}</h3>
+        <p className='text-gray-500'>{task.description}</p>
+        <div className='flex gap-2 mt-10'>
+          <div>
+            <button
+              className='bg-teal-700 px-3 rounded-md font-semibold text-white py-1 hover:bg-teal-900 duration-200 transition-all ease-linear'
+              onClick={handleEdit}
             >
-              <div className='grid'>
-                <h2 className='text-center mb-5'>Edit Task</h2>
-                <input
-                  className='shadow-lg border py-2 rounded-sm px-3 mb-2'
-                  type='text'
-                  placeholder='Title'
-                  value={updatedTitle}
-                  onChange={(e) => setUpdatedTitle(e.target.value)}
-                />
-                <input
-                  className='shadow-lg border py-2 rounded-sm px-3 mb-2'
-                  type='text'
-                  placeholder='Description'
-                  value={updatedDescription}
-                  onChange={(e) => setUpdatedDescription(e.target.value)}
-                />
-                <select
-                  className='p-2 rounded-sm shadow-lg bg-transparent mb-2'
-                  value={updatedStatus}
-                  onChange={(e) => setUpdatedStatus(e.target.value)}
-                >
-                  <option value='To Do'>To Do</option>
-                  <option value='In Progress'>In Progress</option>
-                  <option value='Completed'>Completed</option>
-                </select>
-              </div>
-              <div className='grid grid-cols-2 gap-2'>
-                <div>
-                  <button
-                    type='submit'
-                    className='btn w-full bg-[#8C64FE] text-white hover:text-black'
-                  >
-                    Done
-                  </button>
-                </div>
-                <div>
-                  <button
-                    onClick={handleCancel}
-                    className='btn w-full bg-[#8C64FE] text-white hover:text-black'
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </form>
+              Edit
+            </button>
           </div>
-        ) : null}
-      </div>
-    </>
+          <div>
+            <button
+              className=' py-1 px-3 bg-red-600 text-white rounded-md font-semibold hover:bg-red-800 duration-200 transition-all ease-linear'
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </>
+
+      {isEditing && (
+        <div className='fixed top-0 bottom-0 grid place-content-center left-0 right-0 bg-black/10 backdrop-blur-sm'>
+          <form
+            onSubmit={handleSave}
+            className='flex flex-col justify-between max-w-md h-[350px] bg-[#fafafa] p-5 shadow lg rounded-lg'
+          >
+            <div className='grid'>
+              <h2 className='text-center mb-5'>Edit Task</h2>
+              <input
+                className='shadow-lg border py-2 rounded-sm px-3 mb-2'
+                type='text'
+                placeholder='Title'
+                value={updatedTitle}
+                onChange={(e) => setUpdatedTitle(e.target.value)}
+              />
+              <input
+                className='shadow-lg border py-2 rounded-sm px-3 mb-2'
+                type='text'
+                placeholder='Description'
+                value={updatedDescription}
+                onChange={(e) => setUpdatedDescription(e.target.value)}
+              />
+              <select
+                className='p-2 rounded-sm shadow-lg bg-transparent mb-2'
+                value={updatedStatus}
+                onChange={(e) => setUpdatedStatus(e.target.value)}
+              >
+                <option value='To Do'>To Do</option>
+                <option value='In Progress'>In Progress</option>
+                <option value='Completed'>Completed</option>
+              </select>
+            </div>
+            <div className='grid grid-cols-2 gap-2'>
+              <div>
+                <button
+                  type='submit'
+                  className='btn w-full bg-[#8C64FE] text-white hover:text-black'
+                >
+                  Done
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={handleCancel}
+                  className='btn w-full bg-[#8C64FE] text-white hover:text-black'
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
   );
 };
 
