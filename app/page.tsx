@@ -16,13 +16,15 @@ export default function Home() {
       }),
     };
   });
-
   useEffect(() => {
     const tasksFromLocalStorage = localStorage.getItem("tasks");
-    const parsedTasks = tasksFromLocalStorage
-      ? JSON.parse(tasksFromLocalStorage)
-      : [];
-    store.taskStore.loadTasksFromLocalStorage();
+    if (tasksFromLocalStorage) {
+      const parsedTasks = JSON.parse(tasksFromLocalStorage);
+      store.taskStore.loadTasksFromLocalStorage();
+      parsedTasks.forEach((task: any) => {
+        store.taskStore.addTask(task);
+      });
+    }
   }, [store.taskStore]);
 
   return (

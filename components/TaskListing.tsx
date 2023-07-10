@@ -2,6 +2,7 @@
 import { useStore } from "@/store/context";
 import { useEffect } from "react";
 import Tasks from "./Tasks";
+import { observer } from "mobx-react-lite";
 
 export interface UpdatedTask {
   id: string;
@@ -13,7 +14,7 @@ export interface UpdatedTask {
   setStatus(status: string): void;
 }
 
-const TaskListing = () => {
+const TaskListing = observer(() => {
   const { taskStore } = useStore();
 
   const handleEditTask = (taskId: string, updatedTask: any) => {
@@ -61,6 +62,6 @@ const TaskListing = () => {
       </div>
     </div>
   );
-};
+});
 
 export default TaskListing;

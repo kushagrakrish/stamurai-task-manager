@@ -47,11 +47,11 @@ const TaskStore = types
     };
 
     return {
-      addTask(task: typeof Task.Type) {
+      addTask(task: any) {
         self.tasks.push(task);
         storeTasksToLocalStorage();
       },
-      editTask(taskId: string, updatedTask: typeof Task.Type) {
+      editTask(taskId: any, updatedTask: any) {
         const task = self.tasks.find((t) => t.id === taskId);
         if (task) {
           applySnapshot(task, updatedTask);

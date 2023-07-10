@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { UpdatedTask } from "./TaskListing";
+import { observer } from "mobx-react-lite";
 
 interface TasksProps {
   task: any;
@@ -15,7 +16,7 @@ interface TasksProps {
   onTaskDelete: (taskId: string) => void;
 }
 
-const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
+const Tasks = observer(({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(task.title);
   const [updatedDescription, setUpdatedDescription] = useState(
@@ -156,6 +157,6 @@ const Tasks = ({ task, onTaskEdit, onTaskDelete }: TasksProps) => {
       )}
     </div>
   );
-};
+});
 
 export default Tasks;

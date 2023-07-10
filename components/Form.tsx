@@ -7,9 +7,10 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
-const Form = () => {
+const Form = observer(() => {
   const { taskStore } = useStore();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -92,6 +93,6 @@ const Form = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default Form;
