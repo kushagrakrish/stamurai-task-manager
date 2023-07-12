@@ -5,28 +5,31 @@ import TaskListing from "@/components/TaskListing";
 import { storeContext } from "@/store/context";
 import TaskStore from "@/store/store";
 import { ChakraProvider } from "@chakra-ui/react";
-import { useLocalObservable } from "mobx-react-lite";
-import { useEffect } from "react";
+import { autorun } from "mobx";
+import { useLocalObservable, observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 
-export default function Home() {
-  const store = useLocalObservable(() => {
-    return {
-      taskStore: TaskStore.create({
-        tasks: [],
-      }),
-    };
-  });
+const Home = observer(() => {
+  const store = useLocalObservable(() => ({
+    taskStore: TaskStore.create({
+      tasks: [],
+    }),
+  }));
+
+  const tasksLoadedFromLocalStorage = React.useRef(false);
+
   useEffect(() => {
-    const tasksFromLocalStorage = localStorage.getItem("tasks");
-    if (tasksFromLocalStorage) {
-      const parsedTasks = JSON.parse(tasksFromLocalStorage);
-      store.taskStore.loadTasksFromLocalStorage();
-      parsedTasks.forEach((task: any) => {
-        store.taskStore.addTask(task);
-      });
+    if (typeof window !== "undefined" && !tasksLoadedFromLocalStorage.current) {
+      const tasksFromLocalStorage = localStorage.getItem("tasks");
+      if (tasksFromLocalStorage) {
+        const parsedTasks = JSON.parse(tasksFromLocalStorage);
+        parsedTasks.forEach((task: any) => {
+          store.taskStore.addTask(task);
+        });
+      }
+      tasksLoadedFromLocalStorage.current = true;
     }
   }, [store.taskStore]);
-
   return (
     <>
       <storeContext.Provider value={store}>
@@ -46,4 +49,6 @@ export default function Home() {
       </storeContext.Provider>
     </>
   );
-}
+});
+
+export default Home;

@@ -12,36 +12,24 @@ import { useState } from "react";
 
 const Form = observer(() => {
   const { taskStore } = useStore();
-  const [formValues, setFormValues] = useState({
-    title: "",
-    description: "",
-    status: "",
-  });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("To Do"); // Set the default value to 'To Do'
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newTask = Task.create({
       id: Math.random().toString(),
-      title: formValues.title,
-      description: formValues.description,
-      status: formValues.status,
+      title,
+      description,
+      status,
     });
     taskStore.addTask(newTask);
-    setFormValues({
-      title: "",
-      description: "",
-      status: "",
-    });
-
+    setTitle("");
+    setDescription("");
+    setStatus("To Do");
     onClose();
   };
 
@@ -66,8 +54,8 @@ const Form = observer(() => {
               required
               placeholder='Title'
               name='title'
-              value={formValues.title}
-              onChange={handleChange}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
 
             <input
@@ -76,14 +64,14 @@ const Form = observer(() => {
               required
               name='description'
               placeholder='Description'
-              value={formValues.description}
-              onChange={handleChange}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
             <select
               required
               name='status'
-              value={formValues.status}
-              onChange={handleChange}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
               className='p-2 border border-teal-500 rounded-sm focus:outline-none focus:teal-800 focus:ring-1  bg-transparent'
             >
               <option value='To Do'>To Do</option>

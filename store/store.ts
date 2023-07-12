@@ -22,7 +22,7 @@ export const Task = types
 
 const TaskStore = types
   .model("TaskStore", {
-    tasks: types.optional(types.array(Task), []),
+    tasks: types.array(Task),
   })
   .actions((self) => {
     const storeTasksToLocalStorage = () => {
@@ -39,7 +39,11 @@ const TaskStore = types
         const tasksJson = localStorage.getItem("tasks");
         if (tasksJson) {
           const parsedTasks = JSON.parse(tasksJson);
-          applySnapshot(self.tasks, parsedTasks);
+          self.tasks.replace(
+            parsedTasks.filter(
+              (task: any) => !self.tasks.find((t: any) => t.id === task.id)
+            )
+          ); // Filter out already existing tasks
         }
       } catch (error) {
         console.error("Error parsing tasks from local storage:", error);
@@ -47,11 +51,11 @@ const TaskStore = types
     };
 
     return {
-      addTask(task: any) {
+      addTask(task: typeof Task.Type) {
         self.tasks.push(task);
         storeTasksToLocalStorage();
       },
-      editTask(taskId: any, updatedTask: any) {
+      editTask(taskId: string, updatedTask: typeof Task.Type) {
         const task = self.tasks.find((t) => t.id === taskId);
         if (task) {
           applySnapshot(task, updatedTask);
